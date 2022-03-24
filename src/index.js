@@ -6,6 +6,7 @@ const routes  = require('./routes')
 
 class App {
     constructor() {
+        
         this.app    = express()
         this.server = http.createServer(this.app)
 
