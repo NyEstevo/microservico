@@ -1,0 +1,1 @@
+docker run -v $PWD:/var/www/html -w /var/www/html -it node:14-alpine sh

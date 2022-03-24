@@ -1,0 +1,53 @@
+{
+    "protoOptions": {
+        "keepCase": true,
+        "longs": "String",
+        "enums": "String",
+        "defaults": true,
+        "oneofs": true
+    },
+    "cors": {
+        "origin": "*",
+        "credentials": true,
+        "optionsSuccessStatus": 200
+    },
+    "port": {
+        "rest": 8080,
+        "grpc": 50051
+    },
+    "appType": {
+        "financeiro": [
+            128,
+            81
+        ],
+        "condor": [
+            67
+        ]
+    },
+    "cloud": {
+        "host": "https://superlogica.superlogica.net/",
+        "auth": "financeiro/atual/auth/",
+        "sacados": "financeiro/atual/sacados/",
+        "publico": "areadocliente/atual/publico/",
+        "filename": "superlogica"
+    },
+    "visitante": {
+        "status": {
+            "erro": -1,
+            "ok": 0,
+            "todo_original": 1,
+            "doing": 2,
+            "todo": 3,
+            "reprocess": 4
+        },
+        "code": {
+            "-1": "erro",
+            "0": "ok",
+            "1": "todo_original",
+            "2": "doing",
+            "3": "todo",
+            "4": "reprocess"
+        }
+    },
+    "buffkey": "d93c71ccdb3d1107f262c161b2b0a770"
+}

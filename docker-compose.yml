@@ -1,0 +1,19 @@
+version: "3"
+services:
+  accounts-node-default:
+    container_name: "accounts-node-default"
+    image: "node:14-alpine"
+    working_dir: /var/www/html
+    environment:
+      - NODE_ENV=dev
+      - PORT=3000
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:3000
+    command: sh -c "npm i --silent && npm run dev"
+    networks:
+      - devops-network
+networks:
+  devops-network:
+    driver: bridge

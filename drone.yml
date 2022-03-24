@@ -1,0 +1,69 @@
+---
+kind: pipeline
+type: docker
+name: Teste microserviço
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: build
+    image: node:14-alpine
+    commands:
+      - npm install
+    when:
+      event:
+        - push
+      branch:
+        - master
+        - staging
+
+  - name: publish
+    image: plugins/ecr
+    depends_on:
+      - build
+    settings:
+      region:
+        from_secret: us-east-1
+      repo: sl-ms-teste
+      tags: latest
+      registry: 334947484712.dkr.ecr.us-east-1.amazonaws.com
+    when:
+      event:
+        - push
+      branch:
+        - master
+        - staging
+
+  - name: deploy_ecs
+    image: gportugues/drone-ecs-deploy
+    depends_on:
+      - publish
+    settings:
+      cluster: arn:aws:ecs:us-east-1:334947484712:cluster/sl-ms-teste
+      service: sl-ms-staging-staging
+      image_name: 334947484712.dkr.ecr.us-east-1.amazonaws.com/sl-ms-teste:latest
+      aws_region: us-east-1
+      timeout: "1200"
+      max: "200"
+      min: "100"
+      task_definition:
+        {
+          "taskDefinition":
+            {
+              "requiresCompatibilities": ["FARGATE", "EC2"],
+              "networkMode": "awsvpc",
+            },
+        }
+    when:
+      event:
+        - push
+      branch:
+        - master
+        - staging
+
+trigger:
+  event:
+    - push
+    - pull_request
